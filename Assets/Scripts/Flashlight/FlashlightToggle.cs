@@ -5,7 +5,8 @@ using UnityEngine;
 public class FlashlightToggle : MonoBehaviour
 {   
     [SerializeField] GameObject FLashlight;
-    private bool FLashlightOn = false;
+    public bool flashlightOn = false;
+    public bool hasFlashlight = false;
 
     // Start is called before the first frame update
     void Start()
@@ -16,17 +17,17 @@ public class FlashlightToggle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && hasFlashlight)
         {
-            if (FLashlightOn == false)
+            if (flashlightOn == false)
             {
                 FLashlight.gameObject.SetActive(true);
-                FLashlightOn = true;
+                flashlightOn = true;
             }
             else
             {
                 FLashlight.gameObject.SetActive(false);
-                FLashlightOn = false;
+                flashlightOn = false;
             }
         }
     }
