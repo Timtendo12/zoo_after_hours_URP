@@ -28,26 +28,36 @@ public class StartObjective : MonoBehaviour
         objectiveText.gameObject.SetActive(false);
         objectiveText.text = "";
         objectiveTextStatic.gameObject.SetActive(false);
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        print("[TRIGGER OBJECTIVE START -> ENTER]");
         if (isStart && missionStarted == false && missionFinished == false)
         {
+            print("CHECK1 > " + isStart + "" + missionStarted + "" + missionFinished);
             StartCoroutine(startObjective());   
         } else if (isFinish && missionStarted && missionFinished == false)
         {
+            print("CHECK2 > " + isStart + "" + missionStarted + "" + missionFinished);
             StartCoroutine(finishObjective());
-        } else return;
+        } else print("CHECK3 > " + isStart + "" + missionStarted + "" + missionFinished);
     }
     
     IEnumerator startObjective()
     {
+        //setting up UI
         objectiveText.text = objective;
+        
+        //playing sound
         objectiveStartSound.Play();
+        
+        //showing UI
         objectiveTextStatic.gameObject.SetActive(true);
         objectiveText.gameObject.SetActive(true);
+        
+        //setting bool to true
         missionStarted = true;
         yield return new WaitForSeconds(5);
         objectiveText.gameObject.SetActive(false);
