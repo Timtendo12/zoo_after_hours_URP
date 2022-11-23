@@ -7,6 +7,7 @@ public class enemySecondTrigger : MonoBehaviour
 {
     public GameObject player;
     public enemyTriggerRandomizer enemyTriggerRandomizer;
+    private bool shouldGenerate;
     private void OnTriggerEnter(Collider other)
     {
         print("[TRIGGER: " + gameObject.name + "] Player entered 2nd trigger -> Jumpscare");
@@ -14,17 +15,15 @@ public class enemySecondTrigger : MonoBehaviour
 
     private void Update()
     {
-        var distance = Vector3.Distance(player.transform.position, transform.position);
+        /*var distance = Vector3.Distance(player.transform.position, transform.position);
         //print("PLAYER: " + player.transform.position + " TRIGGER: " + transform.position + " DISTANCE: " + distance);
-
-        if (distance is < 5 and > 0)
+        if (distance < 5)
         {
             print("JUMPSCARE");
-        } else if (distance > 50 && distance !< 50)
+        } else if (distance > 50)
         {
             print("Regenerate");
               enemyTriggerRandomizer.generateTriggers();
               Destroy(gameObject);
-        };
-    }
+    */}
 }
