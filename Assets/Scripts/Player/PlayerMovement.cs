@@ -85,14 +85,16 @@ public class PlayerMovement : MonoBehaviour
     {
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
+        rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         // on ground
-        if(grounded)
+        /*if(grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
         // in air
         else if(!grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        print (grounded);
+        */
     }
 
     private void SpeedControl()
