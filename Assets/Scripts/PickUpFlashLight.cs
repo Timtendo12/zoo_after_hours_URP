@@ -12,7 +12,7 @@ public class PickUpFlashLight : MonoBehaviour
     public GameObject flashlightObject;
     public GameObject flashlightUI;
     private bool inTrigger;
-    [SerializeField] TextMeshProUGUI helpText;
+    [SerializeField] public TextMeshProUGUI helpText;
 
     private void Start()
     {
