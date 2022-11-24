@@ -7,17 +7,26 @@ using UnityEngine;
 public class StartObjective : MonoBehaviour
 {
     public string objective;
-
+    public string objectiveFinish;
+    
     public AudioSource objectiveStartSound;
-
-
+    public AudioSource demonLionRoar;
+    public AudioSource tickingSFX;
+    public AudioSource bgMusicDay;
+    public AudioSource bgMusicNight;
+    
+    
     [SerializeField] public TextMeshProUGUI objectiveText;
     [SerializeField] public TextMeshProUGUI objectiveTextStatic;
+    public enemyTriggerRandomizer enemyTriggerRandomizer;
+    public fadeToBlack fader;
+    public Material nightSkybox;
 
     public finishObjective FinishObjective;
     
     public bool missionStarted;
     public bool isStart;
+    public bool isFinish;
 
     private void Start()
     {
@@ -28,7 +37,11 @@ public class StartObjective : MonoBehaviour
         objectiveText.text = "";
         objectiveTextStatic.gameObject.SetActive(false);
     }
-    
+
+    private void Update()
+    {
+        print("CHECK2 >  missionStarted:" + missionStarted + " missionFinished: " + FinishObjective.missionFinished);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
