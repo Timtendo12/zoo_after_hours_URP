@@ -7,6 +7,7 @@ public class enemySecondTrigger : MonoBehaviour
 {
     public GameObject player;
     public enemyTriggerRandomizer enemyTriggerRandomizer;
+    [Range(0, 100)]public float chanceOfSpawning;
     private bool shouldGenerate;
     private void OnTriggerEnter(Collider other)
     {

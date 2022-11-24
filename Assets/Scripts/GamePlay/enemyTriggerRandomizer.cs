@@ -8,6 +8,7 @@ public class enemyTriggerRandomizer : MonoBehaviour
 {
     public List<Transform> children;
     public bool shouldGenerate;
+    
 
     private void Start()
     {
