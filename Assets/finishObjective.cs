@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class finishObjective : MonoBehaviour
 {
-    public string objective;
     public string objectiveFinish;
     
     public AudioSource objectiveStartSound;
@@ -14,7 +13,8 @@ public class finishObjective : MonoBehaviour
     public AudioSource tickingSFX;
     public AudioSource bgMusicDay;
     public AudioSource bgMusicNight;
-    
+
+    public GameObject closedGate;
     
     [SerializeField] public TextMeshProUGUI objectiveText;
     [SerializeField] public TextMeshProUGUI objectiveTextStatic;
@@ -25,14 +25,20 @@ public class finishObjective : MonoBehaviour
     public StartObjective startObjective;
     
     public bool missionFinished;
-    public bool isStart;
     public bool isFinish;
     // Start is called before the first frame update
+
+    private void Start()
+    {
+        bgMusicDay.loop = true;
+        bgMusicDay.Play();
+        closedGate.SetActive(false);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         print(missionFinished + " " + startObjective.missionStarted);
-        if (!missionFinished && startObjective.missionStarted)
+        if (missionFinished == false && startObjective.missionStarted)
         {
             StartCoroutine(FinishObjective());
         }
@@ -60,24 +66,27 @@ public class finishObjective : MonoBehaviour
         
         //wait til its dark and play roar
         demonLionRoar.Play();
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(4);
         
         //UI text
         objectiveText.text = objectiveFinish;
         objectiveTextStatic.gameObject.SetActive(true);
         objectiveText.gameObject.SetActive(true);
-        
         //changing to nightmode
         RenderSettings.skybox = nightSkybox;
+        closedGate.SetActive(true);
         
         
         //generating js points
         enemyTriggerRandomizer.generateTriggers();
 
         //playing night music
-        bgMusicNight.Play();
         bgMusicNight.loop = true;
+        bgMusicNight.Play();
         
+        objectiveStartSound.Play();
+        fader.fade = false;
+        yield return new WaitForSeconds(5);
         //turning off screen on text;
         objectiveText.text = "";
         objectiveTextStatic.gameObject.SetActive(false);

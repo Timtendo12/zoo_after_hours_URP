@@ -303,3 +303,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/unity,visualstudiocode,rider,jetbrains+iml,macos,linux,windows
+Assets/Sounds/BGMusic/bg_music_mm.mp3
+Assets/Sounds/BGMusic/bg_music_mm.mp3.meta
+Assets/Sounds/BGMusic/bg_music_night.mp3
+Assets/Sounds/BGMusic/bg_music_night.mp3.meta
