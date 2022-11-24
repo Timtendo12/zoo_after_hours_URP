@@ -29,6 +29,7 @@ public class KeyBehaviour : MonoBehaviour
             print("e key was pressed");
             keyObject.SetActive(false);
             keyUI.SetActive(true);
+            hasKey = true;
             helpTextObj.SetActive(false);
             helpText.text = "";
         }
