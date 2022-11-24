@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
 using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -8,21 +9,36 @@ using Random = UnityEngine.Random;
 public class enemyTriggerScript : MonoBehaviour
 {
     [Range(0, 100)]public float chanceOfSpawning;
-    public GameObject target;
-    public float radius;
-    private Transform newTrigger;
+    public List<Transform> children;
+    public bool canGenerate;
 
     private void Start()
     {
+        canGenerate = true;
         print("[TRIGGER: " + gameObject.name + "] has a " + chanceOfSpawning + "% of getting activated");
+        children = new List<Transform>();
+        foreach (Transform tran in transform)
+        {
+            children.Add(tran);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        print("[TRIGGER: " + gameObject.name + "] Player entered trigger -> generating point");
-        //Instantiate(target, Random.insideUnitSphere * radius + ), quaternion.identity);
-        GameObject enemySecondTrigger = Instantiate(target);
-        enemySecondTrigger.transform.position = Random.insideUnitSphere * radius + transform.position;
-        enemySecondTrigger.transform.position = new Vector3(enemySecondTrigger.transform.position.x, 0, enemySecondTrigger.transform.position.z);
+        if (!canGenerate) return;
+        foreach (var trigger in children)
+        {
+            var rand = Random.Range(0, 100);
+            if (rand < trigger.GetComponent<enemySecondTrigger>().chanceOfSpawning){
+                trigger.gameObject.SetActive(true);
+            } else trigger.gameObject.SetActive(false);
+        }
+        canGenerate = false;
+    }
+
+
+    void checkGenerator()
+    {
+        new Timer();
     }
 }

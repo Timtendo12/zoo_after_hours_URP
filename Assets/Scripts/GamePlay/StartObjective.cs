@@ -8,41 +8,48 @@ public class StartObjective : MonoBehaviour
 {
     public string objective;
     public string objectiveFinish;
+    
     public AudioSource objectiveStartSound;
+    public AudioSource demonLionRoar;
+    public AudioSource tickingSFX;
+    public AudioSource bgMusicDay;
+    public AudioSource bgMusicNight;
+    
+    
     [SerializeField] public TextMeshProUGUI objectiveText;
     [SerializeField] public TextMeshProUGUI objectiveTextStatic;
     public enemyTriggerRandomizer enemyTriggerRandomizer;
-    public GameObject humans;
-    public Animator fader;
+    public fadeToBlack fader;
     public Material nightSkybox;
+
+    public finishObjective FinishObjective;
+    
     public bool missionStarted;
-    public bool missionFinished;
     public bool isStart;
     public bool isFinish;
 
     private void Start()
     {
-        missionFinished = false;
+        FinishObjective.missionFinished = false;
         missionStarted = false;
         objectiveStartSound.playOnAwake = false;
         objectiveText.gameObject.SetActive(false);
         objectiveText.text = "";
         objectiveTextStatic.gameObject.SetActive(false);
+    }
 
+    private void Update()
+    {
+        print("CHECK2 >  missionStarted:" + missionStarted + " missionFinished: " + FinishObjective.missionFinished);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        print("[TRIGGER OBJECTIVE START -> ENTER]");
-        if (isStart && missionStarted == false && missionFinished == false)
+        if (!missionStarted && !FinishObjective.missionFinished)
         {
-            print("CHECK1 > " + isStart + "" + missionStarted + "" + missionFinished);
-            StartCoroutine(startObjective());   
-        } else if (isFinish && missionStarted && missionFinished == false)
-        {
-            print("CHECK2 > " + isStart + "" + missionStarted + "" + missionFinished);
-            StartCoroutine(finishObjective());
-        } else print("CHECK3 > " + isStart + "" + missionStarted + "" + missionFinished);
+            StartCoroutine(startObjective());
+            missionStarted = true;
+        }
     }
     
     IEnumerator startObjective()
@@ -63,28 +70,6 @@ public class StartObjective : MonoBehaviour
         objectiveText.gameObject.SetActive(false);
         objectiveTextStatic.gameObject.SetActive(false);
         objectiveText.text = "";
-        yield return null;
-    }
-    
-    IEnumerator finishObjective()
-    {
-        /*
-         * TODO:
-         * - Set UI text -> Done
-         * - Fade to black -> done
-         * - Change Skybox to night -> done
-         * - remove NPC's from scene
-         */
-        //fade screen to black
-        fader.SetTrigger("FadeToBlack");
-        //UI text
-        objectiveText.text = objectiveFinish;
-        objectiveText.gameObject.SetActive(true);
-        //changing to nightmode
-        RenderSettings.skybox = nightSkybox;
-        //disabling humans
-        humans.SetActive(false);
-        enemyTriggerRandomizer.generateTriggers();
         yield return null;
     }
 }

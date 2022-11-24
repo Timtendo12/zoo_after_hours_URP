@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerCam : MonoBehaviour
@@ -7,15 +8,31 @@ public class PlayerCam : MonoBehaviour
     public float sensX;
     public float sensY;
 
+    public TextMeshProUGUI sm_y;
+    public TextMeshProUGUI sm_x;
+
     public Transform orientation;
 
     float xRotation;
     float yRotation;
 
+    public GameObject MouseSliderObj;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        MouseSliderObj = GameObject.Find("mouseSlider");
+        mouseSlider ms = MouseSliderObj.GetComponent<mouseSlider>();
+
+
+        sensX = ms.camSensitivity;
+        sensY = ms.camSensitivity;
+
+
+        sm_x.text = sensX.ToString();
+        sm_y.text = sensY.ToString();
     }
 
     private void Update()
