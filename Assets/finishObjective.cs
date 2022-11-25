@@ -14,8 +14,14 @@ public class finishObjective : MonoBehaviour
     public AudioSource bgMusicDay;
     public AudioSource bgMusicNight;
 
+    public GameObject flUI;
+    public FlashlightToggle flashlight;
+
     public GameObject closedGate;
-    
+
+    public TextMeshProUGUI helpText;
+    public GameObject helpTextObj;
+
     [SerializeField] public TextMeshProUGUI objectiveText;
     [SerializeField] public TextMeshProUGUI objectiveTextStatic;
     public enemyTriggerRandomizer enemyTriggerRandomizer;
@@ -33,6 +39,8 @@ public class finishObjective : MonoBehaviour
         bgMusicDay.loop = true;
         bgMusicDay.Play();
         closedGate.SetActive(false);
+        flUI.SetActive(false);
+        flashlight.hasFlashlight = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -57,6 +65,10 @@ public class finishObjective : MonoBehaviour
          * - play background_night_music ->
          * - 
          */
+
+        missionFinished = true;
+        
+        
         //fade screen to black
         fader.fade = true;
         bgMusicDay.Stop();
@@ -74,7 +86,13 @@ public class finishObjective : MonoBehaviour
         objectiveText.gameObject.SetActive(true);
         //changing to nightmode
         RenderSettings.skybox = nightSkybox;
+        RenderSettings.fog = true;
+        RenderSettings.ambientIntensity = 0f;
+        RenderSettings.fogColor = Color.gray;
+        RenderSettings.fogDensity = 0.09f;
         closedGate.SetActive(true);
+        flUI.SetActive(true);
+        flashlight.hasFlashlight = true;
         
         
         //generating js points
@@ -88,7 +106,11 @@ public class finishObjective : MonoBehaviour
         fader.fade = false;
         yield return new WaitForSeconds(5);
         //turning off screen on text;
-        objectiveText.text = "";
+        helpText.text = "Press F to turn on the flashlight";
+        helpTextObj.SetActive(true);
+        yield return new WaitForSeconds(5);
+        helpTextObj.SetActive(false);
+        helpText.text = "";
         objectiveTextStatic.gameObject.SetActive(false);
         objectiveText.gameObject.SetActive(false);
 

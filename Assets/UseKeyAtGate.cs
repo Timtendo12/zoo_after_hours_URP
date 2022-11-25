@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UseKeyAtGate : MonoBehaviour
@@ -18,18 +19,26 @@ public class UseKeyAtGate : MonoBehaviour
 
     private bool inTrigger;
     private bool keyPress;
-    public bool gateIsopem;
+    public bool gateIsopen;
+
+    public fadeToBlack fader;
+    public GameObject finishScreen;
+    public AudioSource tts;
+    public AudioSource bg_music_night;
+    public JSVariable JsVariable;
 
     // Start is called before the first frame update
     void Start()
     {
         circle.enabled = false;
-        gateIsopem = false;
+        gateIsopen = false;
+        finishScreen.SetActive(false);
+        tts.loop = false;
     }
 
     private void Update()
     {
-        print("timer= " + timer + " circleEnabled= "  +  circle.enabled + " circleFillAmount= " + circle.fillAmount + " gateIsOpen= " + gateIsopem);
+        //print("timer= " + timer + " circleEnabled= "  +  circle.enabled + " circleFillAmount= " + circle.fillAmount + " gateIsOpen= " + gateIsopem);
         if (Input.GetKey(KeyCode.E) && inTrigger && key.hasKey)
         {
             keyPress = true;
@@ -47,7 +56,8 @@ public class UseKeyAtGate : MonoBehaviour
             timer = 0f;
             circle.fillAmount = 0f;
             circle.enabled = false;
-            gateIsopem = true;
+            gateIsopen = true;
+            StartCoroutine(openGate());
         }
 
         if (timer >= 5f)
@@ -73,5 +83,19 @@ public class UseKeyAtGate : MonoBehaviour
         inTrigger = false;
         helpText.text = "";
         helpTextObj.SetActive(false);
+    }
+
+
+    IEnumerator openGate()
+    {
+        tts.enabled = true;
+        bg_music_night.Stop();
+        JsVariable.hasBeenJumpScared = false;
+        fader.fade = true;
+        yield return new WaitForSeconds(1);
+        tts.Play();
+        finishScreen.SetActive(true);
+        yield return new WaitForSeconds(16);
+        SceneManager.LoadScene("MainMenu");
     }
 }

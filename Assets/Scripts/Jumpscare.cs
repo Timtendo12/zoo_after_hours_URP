@@ -40,6 +40,8 @@ public class Jumpscare : MonoBehaviour
 
     public void jumpscare()
     {
+        RenderSettings.fog = false;
+        RenderSettings.ambientIntensity = 1f;
         StartCoroutine(jumpscary());
     }
 
@@ -48,7 +50,7 @@ public class Jumpscare : MonoBehaviour
         flUI.SetActive(false);
         jsCamera.SetActive(true);
         player.SetActive(false);
-        fl.SetActive(true);
+        fl.SetActive(false);
         jumpscareSound.Play();
         
         //TODO: -> Change seconds to a bit more specific be4 production.

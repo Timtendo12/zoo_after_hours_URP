@@ -12,13 +12,17 @@ public class mainMenu : MonoBehaviour
     private void Start()
     {
         bgMusic.Play();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         bgMusic.loop = true;
     }
 
     public void PlayGame()
     {
+        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
         bgMusic.Stop();
-        SceneManager.LoadScene("Developer_Tim");
+        SceneManager.LoadScene("Level-1");
     }
 
     public void QuitGame()

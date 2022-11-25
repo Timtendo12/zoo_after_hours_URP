@@ -9,9 +9,14 @@ public class enemySecondTrigger : MonoBehaviour
     public enemyTriggerRandomizer enemyTriggerRandomizer;
     [Range(0, 100)]public float chanceOfSpawning;
     private bool shouldGenerate;
+    public finishObjective FinishObjective;
+
+    public Jumpscare Jumpscare;
+
     private void OnTriggerEnter(Collider other)
     {
-        print("[TRIGGER: " + gameObject.name + "] Player entered 2nd trigger -> Jumpscare");
+        if (FinishObjective.missionFinished == false) return;
+        Jumpscare.jumpscare();
     }
 
     private void Update()
